@@ -23,7 +23,7 @@ app.use("/api/auth",authRoutes)
 app.use('/api/resources',resourceRoutes);
 
 app.get("/",(req,res)=>{
-    res.send("Welcome to the Our Backend\n\n For Testing : \n\n For Auth routes start with : /api/auth/ \n\n For resource routes strat with /api/resources");
+    res.send("Welcome to the Our Backend!!!!!\n\n For Testing : \n\n For Auth routes start with : /api/auth/_______ \n\n For resource routes strat with /api/resources");
 })
 
 // listening to all the requests

@@ -4,7 +4,8 @@ const Resource = require("../models/resource");
 // Create a resource
 exports.createResource = async (req,res)=>{
     try {
-        const resource = new Resource(req.body);
+        const {_id,...data} = req.body;
+        const resource = new Resource(data);
         await resource.save();
         res.status(201).json(resource)
     } catch (err) {

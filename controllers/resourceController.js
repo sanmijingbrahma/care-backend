@@ -43,7 +43,36 @@ exports.updateResourceByID = async (req,res)=>{
     } catch (err) {
        res.status(400).json({error:err.message})
 
+    }try {
+    // Validate ID
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: "Invalid ID" });
     }
+
+    // Validate updates
+    const allowedUpdates = ["name", "description", "quantity", "createdBy"];
+    const isValidOperation = Object.keys(req.body).every((key) =>
+      allowedUpdates.includes(key)
+    );
+
+    if (!isValidOperation) {
+      return res.status(400).json({ error: "Invalid updates!" });
+    }
+
+    // Perform update
+    const resource = await Resource.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true, // Ensure validation rules are enforced
+    });
+
+    if (!resource) {
+      return res.status(404).json({ error: "Resource not found!" });
+    }
+
+    res.status(200).json(resource);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
 
 // Delete a resource by ID
